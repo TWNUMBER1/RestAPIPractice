@@ -1,28 +1,26 @@
-import logging
+from flask import Flask
+from yelpUtil import yelp
+app = Flask(__name__)
 
-from flask import Blueprint, Flask, render_template, redirect, request, url_for
-stream_handler = logging.StreamHandler()
-stream_handler.setLevel(logging.INFO)
-page = Blueprint('page', __name__)
+@app.route("/")
+def hello():
+    return yelp.getNearbyList()
+    #return "Hello from app!\n"
 
+@app.route("/nearbylist", methods=['GET'])
+def getNearbyList():
+    # GET yelp restaurant list
+    return "Not implemented yet\n"
 
-def create_app():
-    """
-    Create a Flask application using the app factory pattern.
+@app.route("/mylist", methods=['GET'])
+def getMyList():
+    # Get user favorite list
+    return "Not implemented yet\n"
 
-    :return: Flask app
-    """
-    app = Flask(__name__, instance_relative_config=True)
+@app.route("/store/<string:restaurant>", methods=['POST'])
+def storeRestaurant(restaurant):
+    # Store user favorite restaurant
+    return "Not implemented yet\n"
 
-    app.config.from_object('config.settings')
-    app.config.from_pyfile('settings.py', silent=True)
-
-    app.register_blueprint(page)
-    app.logger.addHandler(stream_handler)
-
-    return app
-
-
-@page.route('/')
-def index():
-    return "HELLO"
+if __name__ == "__main__":
+    app.run()
