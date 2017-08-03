@@ -1,6 +1,6 @@
 testapp:
   build: .
-  command: gunicorn -b 0.0.0.0:8000 --reload --access-logfile - "testapp.app:create_app()"
+  command: gunicorn -b 0.0.0.0:8000 --reload --access-logfile - "testapp.app:app"
   environment:
     PYTHONUNBUFFERED: 'true'
   volumes:
