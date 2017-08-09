@@ -1,9 +1,23 @@
-testapp:
-  build: .
-  command: gunicorn -b 0.0.0.0:8000 --reload --access-logfile - "testapp.app:app"
-  environment:
-    PYTHONUNBUFFERED: 'true'
-  volumes:
-    - .:/testapp
-  ports:
-    - '8000:8000'
+version: "2"
+services:
+  myPostgres:
+    image: postgres_test:latest
+    volumes: 
+     - /var/lib/postgresql/data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  testapp:
+    build: .
+    command: gunicorn -b 0.0.0.0:8000 --reload --access-logfile - "testapp.app:app"
+    
+    environment:
+      PYTHONUNBUFFERED: 'true'
+    depends_on:
+        - myPostgres
+    links:
+      - myPostgres
+    volumes:
+      - .:/testapp
+    ports:
+      - '8000:8000'
