@@ -12,7 +12,7 @@ docker-compose up
 ```sh
 docker-compose down #stop the current running app
 docker-compose rm -f #remove existing container
-docker-cmopose up --build -d #Build the app and bring it up
+docker-compose up --build -d #Build the app and bring it up
 ```
 
 ### How to check the app's stdout in docker instance
