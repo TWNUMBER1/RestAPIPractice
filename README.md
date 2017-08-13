@@ -19,11 +19,21 @@ docker-compose up --build -d #Build the app and bring it up
 
 * First check the docker container id by running
 ```sh
-docker ps
+docker ps [--all]
 ```
 * Then check the log by running
 ```sh
 docker logs -f <app_container_id>
+```
+### How to stop and remove docker container
+* Get all containers
+```sh
+docker ps --all
+```
+* Stop and kill container by names
+```sh
+docker stop <NAMES>
+docker rm <NAMES>
 ```
 
 ### Yelp Search API query example
