@@ -13,3 +13,4 @@ RUN pip install -r requirements.txt
 COPY . .
 
 VOLUME ["static"]
+EXPOSE 8000
