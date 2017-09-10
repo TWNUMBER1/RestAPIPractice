@@ -6,13 +6,17 @@
 
 ### How to start the app
 ```sh
-docker-compose up 
+make run
 ```
-### How to rebuild the app
+### How to clean the app
 ```sh
-docker-compose down #stop the current running app
-docker-compose rm -f #remove existing container
-docker-compose up --build -d #Build the app and bring it up
+make cleanall
+```
+
+### How to push docker images to docker hub
+```sh
+make login
+make push
 ```
 
 ### How to check the app's stdout in docker instance
