@@ -1,9 +1,9 @@
 version: "2"
 services:
-  myPostgres:
-    image: postgres_test:latest
+  postgres:
+    image: tsungchh/postgres_docker:1.0.0
     volumes: 
-     - /var/lib/postgresql/data:/var/lib/postgresql/data
+     - /tmp/postgresql/data:/var/lib/postgresql/data
     ports:
       - '5432:5432'
 
@@ -14,9 +14,9 @@ services:
     environment:
       PYTHONUNBUFFERED: 'true'
     depends_on:
-        - myPostgres
+        - postgres
     links:
-      - myPostgres
+      - postgres
     volumes:
       - .:/testapp
     ports:
