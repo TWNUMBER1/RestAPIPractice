@@ -48,19 +48,21 @@ runpostgres:
 	docker run --name "postgres" -d --rm -p 5432:5432 tsungchh/postgres_docker:$(POSTGRESTAG)
 
 rmipostgres:
-	docker images | grep "tsungchh/postgres" | awk '{print $$3}' | xargs docker rmi -f
+	docker images | grep ${REGISTRY}/"postgres" | awk '{print $$3}' | xargs docker rmi -f
 
 rmcpostgres:
-	docker ps -a | grep "tsungchh/postgres" | awk '{print $$1}' | xargs docker rm 
+	docker ps -a | grep ${REGISTRY}/"postgres" | awk '{print $$1}' | xargs docker rm 
 
 stoppostgres:
-	docker ps | grep "tsungchh/postgres" | awk '{print $$1}' | xargs docker stop 
+	docker ps | grep ${REGISTRY}/"postgres" | awk '{print $$1}' | xargs docker stop 
 
 cleanpostgres: stoppostgres rmcpostgres rmipostgres rmdangling
 
 ################################
 
 cleanall: cleanpostgres clean
+
+stopall: stop stoppostgres
 
 depend: pullpostgres runpostgres
 
