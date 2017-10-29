@@ -66,12 +66,15 @@ stopall: stop stoppostgres
 
 depend: pullpostgres runpostgres
 
-run: stop stoppostgres build depend
+run: stop build
 ifeq ($(CMD),)
-	docker run -d --rm --link postgres:postgres -p 8000:8000 ${REGISTRY}/${IMAGE_NAME}:${TAG} ${CMD}
+	docker run --name "foodiesvc" --volume $(CURRENT_DIR):/testapp --rm --link postgres:postgres -p 8000:8000 ${REGISTRY}/${IMAGE_NAME}:${TAG}
 else
-	docker run -it --rm --link postgres:postgres -p 8000:8000 ${REGISTRY}/${IMAGE_NAME}:${TAG} ${CMD}
+	docker run -it --name "foodiesvc" --volume $(CURRENT_DIR):/testapp --rm --link postgres:postgres -p 8000:8000 ${REGISTRY}/${IMAGE_NAME}:${TAG} ${CMD}
 endif
+
+test: 
+	python tests/test.py
 
 ## docker-compose ################
 
@@ -84,4 +87,4 @@ dcrun:
 ##################################
 
 .PHONY: login rmc rmi rmdangling clean push  pullpostgres runpostgres  rmipostgres \
-	rmcpostgres stoppostgres cleanpostgres cleanall depend build dcrm dcrun run
+	rmcpostgres stoppostgres cleanpostgres cleanall depend build dcrm dcrun run test
